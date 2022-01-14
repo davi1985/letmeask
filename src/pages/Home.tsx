@@ -4,13 +4,20 @@ import illustrationImg from '../assets/images/illustration.svg';
 import logoImg from '../assets/images/logo.svg';
 import googleIconImg from '../assets/images/google-icon.svg';
 
-import '../styles/auth.scss';
 import { Button } from '../components/Button';
+import { useAuth } from '../hooks/useAuth';
+
+import '../styles/auth.scss';
 
 export const Home = () => {
+  const { user, signInWithGoogle } = useAuth();
   const navegate = useNavigate();
 
-  const navegateToNewRoom = () => {
+  const handleCreateRoom = async () => {
+    if (!user) {
+      await signInWithGoogle();
+    }
+
     navegate('/rooms/new');
   };
 
@@ -31,7 +38,7 @@ export const Home = () => {
         <div className="main-content">
           <img src={logoImg} alt="Logo Letmeask" />
 
-          <button className="create-room" onClick={navegateToNewRoom}>
+          <button className="create-room" onClick={handleCreateRoom}>
             <img src={googleIconImg} alt="Google Logo" />
             Crie sua sala com o Google
           </button>
