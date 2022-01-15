@@ -1,3 +1,3 @@
 export type RoomCodeProps = {
-  code: string;
+  code: string | undefined;
 };
